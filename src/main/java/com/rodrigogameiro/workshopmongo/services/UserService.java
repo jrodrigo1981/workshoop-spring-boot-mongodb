@@ -13,32 +13,32 @@ import com.rodrigogameiro.workshopmongo.services.exception.ObjectNotFoundExcepti
 
 @Service
 public class UserService {
-	
+
 	@Autowired
 	private UserRepository repo;
 
-	public List<User> findAll(){
+	public List<User> findAll() {
 		return repo.findAll();
 	}
-	
-	public User findById(String id){
+
+	public User findById(String id) {
 		Optional<User> user = repo.findById(id);
 		return user.orElseThrow(() -> new ObjectNotFoundException("User not found"));
 	}
-	
+
 	public User insert(User obj) {
 		return repo.insert(obj);
 	}
-	
+
 	public User fromDTO(UserDTO objDto) {
 		return new User(objDto.getId(), objDto.getName(), objDto.getEmail());
 	}
-	
+
 	public void delete(String id) {
 		findById(id);
 		repo.deleteById(id);
 	}
-	
+
 	public User update(User obj) {
 		User newObj = findById(obj.getId());
 		updateData(newObj, obj);
@@ -46,8 +46,8 @@ public class UserService {
 	}
 
 	private void updateData(User newObj, User obj) {
-		newObj.setName(obj.getName()); 
+		newObj.setName(obj.getName());
 		newObj.setEmail(obj.getEmail());
-		
+
 	}
 }
